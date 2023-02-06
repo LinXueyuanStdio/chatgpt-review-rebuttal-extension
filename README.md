@@ -1,4 +1,4 @@
-# ChatGPT for generating Reviews & Rebuttals
+# ChatGPT - Review & Rebuttal
 
 A browser extension for generating reviews and rebuttals in [openreview](https://openreview.net/), powered by [ChatGPT]().
 
@@ -10,7 +10,7 @@ A browser extension for generating reviews and rebuttals in [openreview](https:/
 
 **ChatGPT - Generate Review**
 
-generate review in panel
+generate review in the extension popup
 
 <a href = "https://github.com/LinXueyuanStdio/chatgpt-review-rebuttal-extension/blob/main/static/generate_review_in_panel.png"><img src="static/generate_review_in_panel.png" width="360"></a>
 <a href = "https://github.com/LinXueyuanStdio/chatgpt-review-rebuttal-extension/blob/main/static/generate_review_in_panel2.png"><img src="static/generate_review_in_panel2.png" width="360"></a>
@@ -31,7 +31,7 @@ inject to openreview.net
 
 #### Install from Web Store (Preferred)
 
-> TODO we have submitted the extension to edge web store. It's under reviewing.
+> TODO: we have submitted the extension to edge web store. It's under reviewing.
 <!-- https://chrome.google.com/webstore/detail/chatgpt-review-rebuttal-ai-assist/dlipncbkjmjjdpgcnodkbdobkadiejll -->
 
 #### Local Install
