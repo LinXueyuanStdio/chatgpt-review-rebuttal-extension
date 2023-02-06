@@ -4,6 +4,7 @@ A browser extension for generating reviews and rebuttals in [openreview](https:/
 
 **Project status:** Beta - Bugs likely - If you run into issues or have feature suggestions --> Submit them as an issue!
 
+![demo](static/demo.gif)
 
 ## Screenshot Gallery
 
