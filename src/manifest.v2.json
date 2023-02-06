@@ -1,0 +1,30 @@
+{
+  "name": "ChatGPT - Review & Rebuttal",
+  "description": "ChatGPT AI assistance for generating reviews and rebuttals.",
+  "version": "1.0.0",
+  "manifest_version": 2,
+  "icons": {
+    "16": "logo.png",
+    "32": "logo.png",
+    "48": "logo.png",
+    "128": "logo.png"
+  },
+  "permissions": ["https://*.openai.com/"],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "browser_action": {},
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://openreview.net/forum*"
+      ],
+      "js": ["content-script.js"],
+      "css": ["content-script.css"]
+    }
+  ]
+}

@@ -1,0 +1,172 @@
+@keyframes gpt-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.chatgpt-button {
+    margin-top: 3px;
+    border-radius: none !important;
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+    border-width: 1px;
+    border-style: solid;
+    border-image: none;
+}
+
+.chatgpt-button.disabled, .chatgpt-button[disabled], fieldset[disabled] .btn {
+    cursor: not-allowed;
+    filter: alpha(opacity=65);
+    opacity: 0.65;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.chatgpt-button:hover {
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+    cursor: pointer;
+}
+
+.chatgpt-button:active {
+    color: #333;
+    background-color: #e6e6e6;
+    background-image: none;
+    border-color: #adadad;
+    background-image: none;
+    outline: 0;
+    -webkit-box-shadow: inset 0 3px 5px rgb(0 0 0 / 13%);
+    box-shadow: inset 0 3px 5px rgb(0 0 0 / 13%);
+}
+
+.chatgpt-copy-button {
+    position: relative;
+    float: right;
+    margin-bottom: -5px;
+}
+
+.chatgpt-container {
+  margin-bottom: 30px;
+  border-radius: 8px;
+  border: 1px solid;
+  flex-basis: 0;
+  flex-grow: 1;
+
+  &.sidebar-free {
+    margin-left: 30px;
+    height: fit-content;
+  }
+
+  @media (prefers-color-scheme: light) {
+    border-color: #dadce0;
+    background-color: white;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    border-color: #3c4043;
+    background-color: #202124;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .gpt-inner {
+    padding: 15px;
+    line-height: 1.5;
+  }
+
+  .icon-and-text {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .icon {
+    padding-top: 2px;
+    margin-right: 5px;
+  }
+
+  .manual-btn {
+    cursor: pointer;
+  }
+
+  .gpt-loading {
+    color: #b6b8ba;
+    animation: gpt-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  #answer {
+    font-size: 15px;
+    line-height: 1.6;
+    border-radius: 8px;
+
+    pre {
+      margin-top: 10px;
+    }
+
+    & > p:not(:last-child) {
+      margin-bottom: 10px;
+    }
+
+    code {
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    pre code.hljs {
+      padding: 0;
+      background-color: transparent;
+    }
+
+    ol li {
+      list-style: disc;
+    }
+
+    .gpt-link {
+      float: right;
+      font-size: 13px;
+      margin-top: 5px;
+      text-decoration: underline;
+      color: black;
+      opacity: 0.8;
+
+      &:visited {
+        color: black;
+      }
+    }
+
+    .gpt-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+
+      p {
+        font-weight: bold;
+      }
+
+      .gpt-feedback {
+        display: flex;
+        gap: 6px;
+        cursor: pointer;
+      }
+
+      .gpt-feedback-selected {
+        color: #f08080;
+      }
+    }
+
+    .gpt-tip {
+      font-style: italic;
+      margin-top: 10px;
+    }
+  }
+}
