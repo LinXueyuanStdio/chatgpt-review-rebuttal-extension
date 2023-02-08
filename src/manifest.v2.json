@@ -1,6 +1,6 @@
 {
-  "name": "ChatGPT - Review & Rebuttal",
-  "description": "ChatGPT AI assistance for generating reviews and rebuttals.",
+  "name": "Review & Rebuttal",
+  "description": "A browser extension for generating reviews and rebuttals, powered by ChatGPT.",
   "version": "1.0.0",
   "manifest_version": 2,
   "icons": {
