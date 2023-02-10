@@ -31,8 +31,7 @@ inject to openreview.net
 
 #### Install from Web Store (Preferred)
 
-> TODO: we have submitted the extension to edge web store. It's under reviewing.
-<!-- https://chrome.google.com/webstore/detail/chatgpt-review-rebuttal-ai-assist/dlipncbkjmjjdpgcnodkbdobkadiejll -->
+https://microsoftedge.microsoft.com/addons/detail/review-rebuttal/aboaofpciadffeflfapkbnjciaefhmhi
 
 #### Local Install
 
