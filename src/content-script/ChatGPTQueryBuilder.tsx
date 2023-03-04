@@ -1,14 +1,22 @@
+import { ElementInterface } from './interface-configs.js'
 import { promptTemplates } from './promptTemplates.js'
 
-export function buildReviewQuery(siteName: string, paperContainerElement: Element): string {
+export function buildReviewQuery(siteName: string, siteConfig: ElementInterface): string {
     const type = "review"
     let paperTitle: string = ""
     let paperAbstract: string = ""
-    const titleNode = paperContainerElement.querySelector(".title_pdf_row > .note_content_title")
-    paperTitle = titleNode?.textContent ?? ""
 
+    // get title
+    const titleElement = document.querySelector(siteConfig.titleElement)
+    if (!titleElement) {
+        console.error("no title found: " + siteConfig.titleElement)
+        return ""
+    }
+    paperTitle = titleElement?.textContent ?? ""
+
+    // get abstract
     if (siteName === "notebook") {
-        const node_contents = paperContainerElement.querySelectorAll(".note_contents") ?? []
+        const node_contents = document.querySelectorAll(siteConfig.abstractElement) ?? []
         for (const node of node_contents) {
             const node_title = node.querySelector(".note_content_field")
             if (!node_title) continue
@@ -19,9 +27,15 @@ export function buildReviewQuery(siteName: string, paperContainerElement: Elemen
                 paperAbstract = abstract?.textContent ?? ""
             }
         }
-    } else {
-        return ""
+    } else if (siteName === "icml2023") {
+        const abstractElement = document.querySelector(siteConfig.abstractElement)
+        if (!abstractElement) {
+            console.error("no abstract found: " + siteConfig.abstractElement)
+            return ""
+        }
+        paperAbstract = abstractElement?.textContent ?? ""
     }
+
     const query = promptTemplates[type](paperTitle, paperAbstract)
     return query
 }
@@ -44,10 +58,10 @@ const fuzzyKeys: Record<string, string[]> = {
 
 export function buildRebuttalQuery(siteName: string, reviewContainerElement: Element): string {
     const type = "rebuttal"
-    let paperSummary : string = ""
-    let paperSummaryOfStrengths : string = ""
-    let paperSummaryOfWeaknesses : string = ""
-    let paperSuggestions : string = ""
+    let paperSummary: string = ""
+    let paperSummaryOfStrengths: string = ""
+    let paperSummaryOfWeaknesses: string = ""
+    let paperSuggestions: string = ""
 
     if (siteName === "notebook") {
         const node_contents = reviewContainerElement.querySelectorAll(".note_contents") ?? []

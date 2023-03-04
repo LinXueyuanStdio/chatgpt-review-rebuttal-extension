@@ -2,7 +2,7 @@ import 'github-markdown-css'
 import { render } from 'preact'
 import ChatGPTQuery from './ChatGPTQuery'
 import { buildReviewQuery, buildRebuttalQuery, queryReviewElements } from './ChatGPTQueryBuilder'
-import { Button, LabArea } from './Interface'
+import { Button } from './Interface'
 import { config, ElementInterface } from './interface-configs.js'
 import './styles.scss'
 import { promptSettings } from './prompt-configs.js'
@@ -12,8 +12,8 @@ import { CopilotIcon } from '@primer/octicons-react'
 /*                                  Functions                                 */
 /* -------------------------------------------------------------------------- */
 
-async function identify_notebook_type(config: Record<string, ElementInterface>) {
-    const maxTries = 14
+async function identify_inject_type(config: Record<string, ElementInterface>) {
+    const maxTries = 30
     let tries = 0
     let parent = null
     while (tries < maxTries) {
@@ -69,26 +69,12 @@ export async function submit_and_add_question(
     )
 }
 
-function attach_lab_area() {
-    const parentArea = document.querySelector('#jp-left-stack')
-    const area_container = document.createElement('span')
-    area_container.className = 'chatgpt-area'
-    parentArea!.append(area_container)
-    if (!parentArea) {
-        console.error("ChatGPT Review&Rebuttal: Error - could not find parent area")
-        return
-    }
-    render(
-        <LabArea />,
-        area_container
-    )
-}
-
 function create_review_button(siteConfig: ElementInterface, siteName: string) {
     const key = "review"
     const prompt = promptSettings[key]
-    const paperElement = document.querySelector("#content > .forum-container > .note")
-    if (!paperElement) {
+    const resultContainerElement = document.querySelector(siteConfig.resultContainer)
+    if (!resultContainerElement) {
+        console.error("no container found to append results: " + siteConfig.resultContainer)
         return
     }
 
@@ -107,8 +93,8 @@ function create_review_button(siteConfig: ElementInterface, siteName: string) {
         <Button
             name={prompt.buttonLabel}
             onClick={() => {
-                const query = buildReviewQuery(siteName, paperElement)
-                submit_and_add_question(query, key, paperElement)
+                const query = buildReviewQuery(siteName, siteConfig)
+                submit_and_add_question(query, key, resultContainerElement)
             }}
             icon={prompt.buttonIcon}
         />
@@ -154,22 +140,28 @@ function create_rebuttal_button(siteConfig: ElementInterface, siteName: string) 
     }
 }
 
+async function create_interface_awaiting_loading(siteConfig: ElementInterface, siteName: string) {
+    const maxTries = 30
+    let tries = 0
+
+    while (tries < maxTries) {
+        const loadingElement = document.querySelector(siteConfig.loadingElement)
+        if (!loadingElement) {
+            create_review_button(siteConfig, siteName)
+            create_rebuttal_button(siteConfig, siteName)
+            return
+        }
+        await new Promise(resolve => setTimeout(resolve, 500))
+    }
+}
+
 async function create_interface(siteConfig: ElementInterface, siteName: string) {
     // create review and rebuttal button
     // Attach manual close to make sure the closing button still works in openreview
     if (siteName === "notebook") {
-        const maxTries = 14
-        let tries = 0
-
-        while (tries < maxTries) {
-            const loadingElement = document.querySelector("#note_children > .spinner-container")
-            if (!loadingElement) {
-                create_review_button(siteConfig, siteName)
-                create_rebuttal_button(siteConfig, siteName)
-                return
-            }
-            await new Promise(resolve => setTimeout(resolve, 500))
-        }
+        await create_interface_awaiting_loading(siteConfig, siteName)
+    } else if (siteName === "icml2023") {
+        await create_interface_awaiting_loading(siteConfig, siteName)
     }
 }
 
@@ -179,17 +171,11 @@ async function create_interface(siteConfig: ElementInterface, siteName: string) 
 
 async function main() {
 
-    const siteName = await identify_notebook_type(config)
+    const siteName = await identify_inject_type(config)
     if (siteName) {
         // Get the config for the current site
         const siteConfig = config[siteName]
-
-        // Add the extension interface
         await create_interface(siteConfig, siteName)
-
-        if (siteName === "lab") {
-            setTimeout(() => { attach_lab_area() }, 1000) // This is a quick hack, but it works
-        }
 
         console.log("ChatGPT - Review & Rebuttal: active and ready!")
     } else {

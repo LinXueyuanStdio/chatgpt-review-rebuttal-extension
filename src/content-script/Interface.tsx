@@ -15,12 +15,3 @@ export function Button(props: Props) {
     )
 
 }
-
-export function LabArea() {
-    return (
-        <div className="lm-Widget p-Widget jp-PropertyInspector lm-mod-hidden p-mod-hidden lm-StackedPanel-child p-StackedPanel-child" style={{height: '100%'}} id="labContainerParent">
-            <div className="lm-Widget p-Widget jp-NotebookTools" id="labContainerChild"></div>
-        </div>
-    )
-
-}
