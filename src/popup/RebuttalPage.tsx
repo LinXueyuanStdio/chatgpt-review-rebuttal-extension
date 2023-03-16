@@ -17,7 +17,7 @@ function RebuttalPage(props: Props) {
   const [summaryOfStrengths, setSummaryOfStrengths] = useState('')
   const [summaryOfWeaknesses, setSummaryOfWeaknesses] = useState('')
   const [suggestions, setSuggestions] = useState('')
-  const element = <div className="result-container"></div>
+  const element = <div id="rebuttal-result" className="result-container"></div>
   return (
     <div className="container">
       <div style="display: flex; justify-content: space-around">
@@ -59,7 +59,9 @@ function RebuttalPage(props: Props) {
         onClick={() => {
           const query = rebuttalTemplate(summary, summaryOfStrengths, summaryOfWeaknesses, suggestions)
           console.log(query)
-          submit_and_add_question(query, key, element)
+          const resultElement = document.getElementById("rebuttal-result")
+          if (!resultElement) return
+          submit_and_add_question(query, key, resultElement)
         }}
         icon={prompt.buttonIcon}
       />

@@ -2,7 +2,7 @@
   "name": "Review & Rebuttal",
   "description": "A browser extension for generating reviews and rebuttals, powered by ChatGPT.",
   "version": "1.0.1",
-  "manifest_version": 4,
+  "manifest_version": 2,
   "icons": {
     "16": "logo.png",
     "32": "logo.png",
